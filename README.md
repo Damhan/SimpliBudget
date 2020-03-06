@@ -10,3 +10,5 @@ A simple, no stress budgeting app in React-Native.
 ## Tech Stack
 * React-Native (with expo)
 * Redux
+* Redux-persist
+* Jest
