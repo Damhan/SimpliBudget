@@ -1,17 +1,24 @@
-import {GET_BAL} from './../actions/types';
+import {GET_BAL, SUB_BAL, INC_BAL} from './../actions/types';
 
-//Adding some static data to our reducers state.
 const initialState = {
-    balance: 100
+    balance: 0 
 }
 
 export default function(state=initialState, action) {
     switch(action.type) {
-        //CASE FOR WHEN ACTION is GET_BAL
-        //Spred operator returns what is in state.
         case GET_BAL:
             return {
                 ...state
+            }
+        case SUB_BAL:
+            return {
+                ...state,
+                balance: state.balance - action.payload
+            }
+        case INC_BAL:
+            return {
+                ...state,
+                balance: state.balance + action.payload
             }
         default:
             return state;
