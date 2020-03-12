@@ -3,6 +3,7 @@ import { StyleSheet, StatusBar, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { subBal} from './../actions/balActions.js';
+import { addExp} from './../actions/expActions.js'
 import { TextInput } from 'react-native-gesture-handler';
 
 

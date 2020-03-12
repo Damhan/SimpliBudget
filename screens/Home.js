@@ -22,11 +22,12 @@ export default function Home({navigation}) {
         <Text style={styles.balance}>${balR.balance}</Text>
         <Button title="Add expense" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('Expenditure')}/>
         <Button title="Add recurring expense" buttonStyle={styles.button} containerStyle={styles.buttonContainer}/>
-        <Button title="View monthly report" buttonStyle={styles.button} containerStyle={styles.buttonContainer}/>
+        <Button title="View monthly report" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('Report')}/>
       </View>
     </View>
 
   );
+  
 }
 
 
