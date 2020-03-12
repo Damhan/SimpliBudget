@@ -1,9 +1,6 @@
 import {GET_EXP, DEL_EXP, ADD_EXP} from './../actions/types';
-import _uniqueId from 'lodash/uniqueId';
-
 const initialState = {
-    exps: [{id: _uniqueId(), amount: 10},
-           {id: _uniqueId(), amount:50}]
+    exps: []
 }
 
 export default function(state=initialState, action) {

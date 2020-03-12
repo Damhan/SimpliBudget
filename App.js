@@ -19,7 +19,7 @@ export default function App() {
                               },
                               headerRight: () => (
                               <Button
-                                onPress={() => alert('This is a button!')}
+                                onPress={() => navigation.navigate('Report')}
                                 title="Reports"
                                 color="#993399"
                               />),

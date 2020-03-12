@@ -14,6 +14,15 @@ export default function Expenditure() {
   
     const addExpenditure = () => {
         dispatch(subBal(expValue))
+        const exp = {
+          //uuid cannot currently be used with expo due to expo not being compatible with crypto.getRandomValues.
+          //the new uuid cannot function without it, a polyfill, react-native-get-random-values does not work with expo as it requires native code.
+          //See https://github.com/expo/expo/issues/7209
+          //Math.random() used as temporary workaround.
+          id: Math.random(),
+          amount:expValue
+        }
+        dispatch(addExp(exp))
         onChangeText("")
     }
 
