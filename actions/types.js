@@ -2,6 +2,7 @@
 export const GET_BAL = 'GET_BAL';
 export const SUB_BAL = 'SUB_BAL';
 export const INC_BAL = 'INC_BAL';
+export const SET_BAL = 'SET_BAL';
 
 /* Expenditure actions */
 export const GET_EXP = 'GET_EXP';

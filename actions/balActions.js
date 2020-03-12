@@ -1,4 +1,4 @@
-import {GET_BAL, SUB_BAL, INC_BAL} from './types';
+import {GET_BAL, SUB_BAL, INC_BAL, SET_BAL} from './types';
 
 export const getBal = () => {
     return {
@@ -16,6 +16,13 @@ export const subBal = (amount) => {
 export const incBal = (amount) => {
     return {
         type: INC_BAL,
+        payload: amount
+    }
+}
+
+export const setBal = (amount) => {
+    return {
+        type: SET_BAL,
         payload: amount
     }
 }

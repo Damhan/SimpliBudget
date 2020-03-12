@@ -1,4 +1,4 @@
-import {GET_BAL, SUB_BAL, INC_BAL} from './../actions/types';
+import {GET_BAL, SUB_BAL, INC_BAL, SET_BAL} from './../actions/types';
 
 const initialState = {
     balance: 0 
@@ -19,6 +19,11 @@ export default function(state=initialState, action) {
             return {
                 ...state,
                 balance: state.balance + action.payload
+            }
+        case SET_BAL:
+            return {
+                ...state,
+                balance: action.payload
             }
         default:
             return state;

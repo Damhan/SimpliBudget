@@ -7,7 +7,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from './screens/Home';
 import Expenditure from './screens/Expenditure';
 import Report from './screens/Report';
+import Settings from './screens/Settings';
 import { PersistGate } from 'redux-persist/integration/react';
+
 
 const Stack = createStackNavigator();
 
@@ -54,6 +56,11 @@ export default function App() {
             <Stack.Screen
               name="Report"
               component={Report}
+              options={navigationOptions}
+            />
+            <Stack.Screen
+              name="Settings"
+              component={Settings}
               options={navigationOptions}
             />
           </Stack.Navigator>

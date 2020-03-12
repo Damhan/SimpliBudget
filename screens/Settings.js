@@ -2,25 +2,17 @@ import React, { useState } from 'react';
 import { StyleSheet, StatusBar, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-native-elements';
-import { addExp} from './../actions/expActions.js'
+import { setBal} from './../actions/balActions.js'
 import { TextInput } from 'react-native-gesture-handler';
 
 
-export default function Expenditure() {
+export default function Settings() {
 
-    const [expValue, onChangeText] = useState('')
+    const [balValue , onChangeText] = useState('')
     const dispatch = useDispatch();
   
     const addExpenditure = () => {
-        const exp = {
-          //uuid cannot currently be used with expo due to expo not being compatible with crypto.getRandomValues.
-          //the new uuid cannot function without it, a polyfill, react-native-get-random-values does not work with expo as it requires native code.
-          //See https://github.com/expo/expo/issues/7209
-          //Math.random() used as temporary workaround.
-          id: Math.random(),
-          amount:expValue
-        }
-        dispatch(addExp(exp))
+        dispatch(setBal(balValue))
         onChangeText("")
     }
 
@@ -31,10 +23,10 @@ export default function Expenditure() {
         <StatusBar hidden />
         <TextInput
           style={{height:40, borderColor: 'gray', borderWidth:1}}
-          value={expValue}
+          value={balValue}
           onChangeText={text => onChangeText(text)}
         />
-        <Button title="Add" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={addExpenditure}/>
+        <Button title="Update monthly balance" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={addExpenditure}/>
       </View>
     </View>
 
