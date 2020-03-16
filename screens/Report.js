@@ -1,20 +1,28 @@
 import React, {useEffect} from 'react';
 import { StyleSheet, StatusBar, View, Text, AsyncStorage, Button } from 'react-native';
 import {useSelector,useDispatch} from 'react-redux';
-import {getExp} from './../actions/expActions.js';
+import {getExp, clearExp} from './../actions/expActions.js';
 import _uniqueId from 'lodash/uniqueId';
+import { getRecurrExp } from '../actions/recurrExpActions.js';
 
 export default function Report() {
 
   const expR = useSelector(state => state.expR)
+  const recurrExpR = useSelector(state => state.recurrExpR)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getExp())
+    dispatch(getRecurrExp())
   },[])
 
-  clearAsyncStorage = async() => {
+  // Deprecated, saving for 
+  const clearAsyncStorage = async() => {
       AsyncStorage.clear()
+  }
+
+  const clearExpTest = () => {
+    dispatch(clearExp())
   }
 
   return (
@@ -22,15 +30,22 @@ export default function Report() {
       <View style={styles.container}>
         <StatusBar hidden />
         <Button title="Delete" onPress={clearAsyncStorage}></Button>
+        <Text>Expenditures</Text>
         {expR.exps.map(exp => (
             <View key={_uniqueId()}>
                 <Text>{exp.id}</Text>
                 <Text>{exp.amount}</Text>
             </View>
-))}
+        ))}
+        <Text>Recurring Expenditures</Text>
+        {recurrExpR.recurrExps.map(recurr => (
+            <View key={_uniqueId()}>
+                <Text>{recurr.id}</Text>
+                <Text>{recurr.amount}</Text>
+            </View>
+        ))}
       </View>
     </View>
-
   );
 }
 
