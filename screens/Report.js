@@ -35,6 +35,7 @@ export default function Report() {
             <View key={_uniqueId()}>
                 <Text>{exp.id}</Text>
                 <Text>{exp.amount}</Text>
+                <Text>{exp.category}</Text>
             </View>
         ))}
         <Text>Recurring Expenditures</Text>
@@ -42,6 +43,7 @@ export default function Report() {
             <View key={_uniqueId()}>
                 <Text>{recurr.id}</Text>
                 <Text>{recurr.amount}</Text>
+                <Text>{recurr.category}</Text>
             </View>
         ))}
       </View>
