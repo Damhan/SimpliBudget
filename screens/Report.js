@@ -46,6 +46,27 @@ export default function Report() {
                 <Text>{recurr.category}</Text>
             </View>
         ))}
+        <Text>CatCounts</Text>
+        {
+          expR.catCounts.map(cat => (
+            <View key={_uniqueId()}>
+                <Text>{cat.category}</Text>
+                <Text>{cat.count}</Text>
+            </View>
+        ))
+        }
+
+        <Text>{expR.cat}</Text>
+        <Text>RecurrCatCounts</Text>
+        {
+          recurrExpR.recurrCatCounts.map(cat => (
+            <View key={_uniqueId()}>
+                <Text>{cat.category}</Text>
+                <Text>{cat.count}</Text>
+            </View>
+        ))
+        }
+        <Text>{recurrExpR.cat}</Text>
       </View>
     </View>
   );

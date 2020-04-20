@@ -31,7 +31,6 @@ export default function Home({navigation}) {
   }, 0);
 
   const recurrExpTotal = recurrExpR.recurrExps.reduce(function (sum, recurr) {
-    console.log(recurr)
     return sum + parseInt(recurr.amount)
   }, 0);
 

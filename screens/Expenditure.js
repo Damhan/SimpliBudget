@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { StyleSheet, StatusBar, View, Picker } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, StatusBar, View, Picker, Text } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import {getExp} from './../actions/expActions.js';
 import { Button } from 'react-native-elements';
 import { addExp} from './../actions/expActions.js'
 import { TextInput } from 'react-native-gesture-handler';
@@ -11,6 +12,10 @@ export default function Expenditure() {
     const [expValue, onChangeText] = useState('')
     const [catValue, onChangeCat] = useState('cat1')
     const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(getExp())
+    },[])
   
     const addExpenditure = () => {
         const exp = {
@@ -40,8 +45,8 @@ export default function Expenditure() {
           style={{height:40, borderColor: 'gray', borderWidth:1}}
           value={catValue}
           onValueChange={cat => onChangeCat(cat)}>
-            <Picker.Item label="cat1" value="Category 1" />
-            <Picker.Item label="cat2" value="Category 2" />
+            <Picker.Item label="Category 1" value="cat1" />
+            <Picker.Item label="Category 2" value="cat2" />
         </Picker>
         <Button title="Add" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={addExpenditure}/>
       </View>
