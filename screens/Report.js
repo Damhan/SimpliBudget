@@ -1,20 +1,59 @@
-import React, {useEffect} from 'react';
-import { StyleSheet, StatusBar, View, Text, AsyncStorage, Button } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, StatusBar, View, Text, AsyncStorage, Button, Dimensions } from 'react-native';
 import {useSelector,useDispatch} from 'react-redux';
 import {getExp, clearExp} from './../actions/expActions.js';
 import _uniqueId from 'lodash/uniqueId';
 import { getRecurrExp } from '../actions/recurrExpActions.js';
+import { PieChart } from "react-native-chart-kit";
 
 export default function Report() {
 
   const expR = useSelector(state => state.expR)
   const recurrExpR = useSelector(state => state.recurrExpR)
+  const [piePieces, setPiePieces] = useState([]);
   const dispatch = useDispatch();
 
+  const getAllExps = async () => {
+    await dispatch(getExp())
+    await dispatch(getRecurrExp())
+  }
+
+  const screenWidth = Dimensions.get("window").width
+
+  const chartConfig ={
+    backgroundColor: "#e26a00",
+    backgroundGradientFrom: "#fb8c00",
+    backgroundGradientTo: "#ffa726",
+    decimalPlaces: 2, // optional, defaults to 2dp
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    style: {
+      borderRadius: 16
+    },
+    propsForDots: {
+      r: "6",
+      strokeWidth: "2",
+      stroke: "#ffa726"
+    }
+  }
+
   useEffect(() => {
-    dispatch(getExp())
-    dispatch(getRecurrExp())
-  },[])
+    getAllExps()
+    console.log(expR.cat)
+    expR.catCounts.map(cat => {
+        // console.log("For each")
+        // console.log(cat)
+        // console.log(expR.cat)
+        // console.log(piePieces)
+        console.log(cat.category, typeof cat.category)
+        setPiePieces(piePieces => [...piePieces, {value: ((cat.count / expR.cat) * 100),
+                                                  name: cat.category,
+                                                  color: (cat.category.localeCompare("cat1") ? "green" : "yellow"),
+                                                  legendFontColor: "black", legendFontSize: 15}
+        ])
+        //setPiePieces([...piePieces, {value: ((cat.count / expR.cat) * 100), name: cat.category, legendFontColor: "black", legendFontSize: 15}])
+    })
+  }, [])
 
   // Deprecated, saving for 
   const clearAsyncStorage = async() => {
@@ -29,23 +68,6 @@ export default function Report() {
     <View style={styles.main}>
       <View style={styles.container}>
         <StatusBar hidden />
-        <Button title="Delete" onPress={clearAsyncStorage}></Button>
-        <Text>Expenditures</Text>
-        {expR.exps.map(exp => (
-            <View key={_uniqueId()}>
-                <Text>{exp.id}</Text>
-                <Text>{exp.amount}</Text>
-                <Text>{exp.category}</Text>
-            </View>
-        ))}
-        <Text>Recurring Expenditures</Text>
-        {recurrExpR.recurrExps.map(recurr => (
-            <View key={_uniqueId()}>
-                <Text>{recurr.id}</Text>
-                <Text>{recurr.amount}</Text>
-                <Text>{recurr.category}</Text>
-            </View>
-        ))}
         <Text>CatCounts</Text>
         {
           expR.catCounts.map(cat => (
@@ -54,19 +76,20 @@ export default function Report() {
                 <Text>{cat.count}</Text>
             </View>
         ))
-        }
-
-        <Text>{expR.cat}</Text>
-        <Text>RecurrCatCounts</Text>
-        {
-          recurrExpR.recurrCatCounts.map(cat => (
-            <View key={_uniqueId()}>
-                <Text>{cat.category}</Text>
-                <Text>{cat.count}</Text>
-            </View>
-        ))
-        }
-        <Text>{recurrExpR.cat}</Text>
+        }     
+          <Button title="Delete" onPress={clearAsyncStorage}></Button>
+          <PieChart
+            //data={[{value: 50, name: "cat1", color: "green", legendFontColor: "red", legendFontSize: 15}, {value: 50, name: "cat2", color: "yellow",  legendFontColor: "blue", legendFontSize: 15}]}
+            data={piePieces}
+            width={220}
+            height={screenWidth}
+            chartConfig={chartConfig}
+            accessor="value"
+            backgroundColor="transparent"
+            
+            
+          />
+          {console.log(piePieces)}
       </View>
     </View>
   );
