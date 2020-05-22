@@ -11,15 +11,11 @@ export default function Report() {
   const expR = useSelector(state => state.expR)
   const recurrExpR = useSelector(state => state.recurrExpR)
   const [piePieces, setPiePieces] = useState([]);
+  const [recurrPiePieces, setRecurrPiePieces] = useState([]);
   const dispatch = useDispatch();
 
-  const getAllExps = async () => {
-    await dispatch(getExp())
-    await dispatch(getRecurrExp())
-  }
-
+  /* Exp Pie Chart Props */
   const screenWidth = Dimensions.get("window").width
-
   const chartConfig ={
     backgroundColor: "#e26a00",
     backgroundGradientFrom: "#fb8c00",
@@ -37,58 +33,65 @@ export default function Report() {
     }
   }
 
+  const getAllExps = () => {
+    dispatch(getExp())
+    dispatch(getRecurrExp())
+  }
+
+
   useEffect(() => {
     getAllExps()
-    console.log(expR.cat)
+
+    /* Create our piePieces array for piechart's data prop */
     expR.catCounts.map(cat => {
-        // console.log("For each")
-        // console.log(cat)
-        // console.log(expR.cat)
-        // console.log(piePieces)
-        console.log(cat.category, typeof cat.category)
+
         setPiePieces(piePieces => [...piePieces, {value: ((cat.count / expR.cat) * 100),
                                                   name: cat.category,
                                                   color: (cat.category.localeCompare("cat1") ? "green" : "yellow"),
                                                   legendFontColor: "black", legendFontSize: 15}
         ])
-        //setPiePieces([...piePieces, {value: ((cat.count / expR.cat) * 100), name: cat.category, legendFontColor: "black", legendFontSize: 15}])
+    })
+    /* Create our piePieces array for piechart's data prop */
+    recurrExpR.recurrCatCounts.map(cat => {
+
+      setRecurrPiePieces(recurrPiePieces => [...recurrPiePieces, {value: ((cat.count / recurrExpR.cat) * 100),
+                                                name: cat.category,
+                                                color: (cat.category.localeCompare("cat1") ? "green" : "yellow"),
+                                                legendFontColor: "black", legendFontSize: 15}
+        ])
     })
   }, [])
 
-  // Deprecated, saving for 
+  // Used for dev-testing to clear the async storage.
   const clearAsyncStorage = async() => {
       AsyncStorage.clear()
-  }
-
-  const clearExpTest = () => {
-    dispatch(clearExp())
   }
 
   return (
     <View style={styles.main}>
       <View style={styles.container}>
         <StatusBar hidden />
-        <Text>CatCounts</Text>
-        {
-          expR.catCounts.map(cat => (
-            <View key={_uniqueId()}>
-                <Text>{cat.category}</Text>
-                <Text>{cat.count}</Text>
-            </View>
-        ))
-        }     
           <Button title="Delete" onPress={clearAsyncStorage}></Button>
+          <Text>Expenditure breakdown</Text>
           <PieChart
-            //data={[{value: 50, name: "cat1", color: "green", legendFontColor: "red", legendFontSize: 15}, {value: 50, name: "cat2", color: "yellow",  legendFontColor: "blue", legendFontSize: 15}]}
             data={piePieces}
-            width={220}
-            height={screenWidth}
+            width={screenWidth}
+            height={200}
             chartConfig={chartConfig}
             accessor="value"
-            backgroundColor="transparent"
-            
-            
+            backgroundColor="transparent" 
           />
+
+          <Text>Recurring expenditure breakdown</Text>
+          <PieChart
+            data={recurrPiePieces}
+            width={screenWidth}
+            height={200}
+            chartConfig={chartConfig}
+            accessor="value"
+            backgroundColor="transparent" 
+          />
+
           {console.log(piePieces)}
       </View>
     </View>
