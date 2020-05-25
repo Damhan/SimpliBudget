@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#ffffe6',
+    backgroundColor: '#FAFAFA',
   },
   main: {
     flex: 1,
@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
   },
   balance: {
     textAlign: 'center',
-    color: '#732673',
+    color: '#424242',
     fontSize: 50,
-    paddingBottom: '20%'
+    paddingBottom: '20%',
   },
   buttonContainer: {
     paddingTop: '5%',
   },
   button: {
-    backgroundColor: '#993399'
+    backgroundColor: '#FF1053'
   }
 });

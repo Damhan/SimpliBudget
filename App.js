@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import {StyleSheet, Button } from 'react-native';
+import {StyleSheet, Button, Text, TouchableOpacity } from 'react-native';
 import {getStore, getPersistor} from './store';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -18,22 +18,26 @@ export default function App() {
 
   const navigationOptions = ({navigation}) => ({title: 'SimpliBudget', 
                               headerStyle: {
-                              backgroundColor: '#732673',
+                              backgroundColor: '#FF1053',
                               },
                               headerRight: () => (
-                              <Button
+                              <TouchableOpacity
+                                style={styles.button}
                                 onPress={() => navigation.navigate('Report')}
-                                title="Reports"
-                                color="#993399"
-                              />),
+                              >
+                                <Text style={{color:'#424242'}}> Reports </Text>
+                              </TouchableOpacity>
+                                ),
                               headerLeft: () => (
-                              <Button
+                                <TouchableOpacity
+                                style={styles.button}
                                 onPress={() => navigation.navigate('Home')}
-                                title="Home"
-                                color="#993399"
-                              />),
+                              >
+                                <Text style={{color:'#424242'}}> Home </Text>
+                              </TouchableOpacity>
+                                ),
                               headerTitleStyle: {
-                                color: 'white'
+                                color: '#78FF10'
                               },
                               headerTitleAlign: 'center'
                               })
@@ -80,4 +84,10 @@ const styles = StyleSheet.create({
   app: {
     flex: 1,
   },
+  button: {
+    alignItems: 'center',
+    backgroundColor: '#FF1053',
+    padding: 10,
+    borderRadius: 5,
+  }
 });

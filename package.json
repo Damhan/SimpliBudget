@@ -27,6 +27,7 @@
     "@react-navigation/native": "^5.0.8",
     "@react-navigation/stack": "^5.1.0",
     "expo": "~36.0.0",
+    "native-base": "^2.13.12",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
@@ -45,7 +46,9 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "util": "^0.12.2",
-    "uuid": "^7.0.2"
+    "uuid": "^7.0.2",
+    "expo-font": "~8.0.0",
+    "@expo/vector-icons": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

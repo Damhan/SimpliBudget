@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#ffffe6',
+    backgroundColor: '#FAFAFA',
   },
   main: {
     flex: 1,
@@ -51,6 +51,6 @@ const styles = StyleSheet.create({
     paddingTop: '5%',
   },
   button: {
-    backgroundColor: '#993399'
+    backgroundColor: '#FF1053'
   }
 });
