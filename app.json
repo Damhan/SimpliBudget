@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "SimpliBudget",
+    "name": "SimpliBudget",
+    "slug": "A simple, no stress budgeting app.",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -9,13 +9,13 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FF1053"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,7 +24,14 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "com.damhan.simplibudget",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.damhan.simplibudget",
+      "versionCode": 1
+    },
+    "primaryColor": "#FF1053"
   }
 }

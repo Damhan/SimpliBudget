@@ -97,9 +97,14 @@ export default function Report() {
     <SafeAreaView style={styles.main}>
       <ScrollView style={styles.container}>
         <StatusBar hidden />
+
           {/* <Button title="Delete" onPress={clearAsyncStorage}></Button> */}
-          <Text>Expenditure breakdown</Text>
-          {piePieces.length < 2 ? null :
+
+          {/* EXPENDITURE AND RECURRING EXPENDITURE PIE CHART JSX*/}
+          <Text style={styles.heading}>Expenditure breakdown</Text>
+          {console.log(piePieces)}
+          {
+          piePieces[0] ? <Text style={styles.warning}>Add some expenses to view statistics</Text> :
           (<PieChart
             data={piePieces}
             width={screenWidth}
@@ -110,8 +115,8 @@ export default function Report() {
           />)
           }
 
-          <Text>Recurring expenditure breakdown</Text>
-          {recurrPiePieces.length < 2 ? null : 
+          <Text style={styles.heading}>Recurring expenditure breakdown</Text>
+          {recurrPiePieces[0] ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
           (
           <PieChart
             data={recurrPiePieces}
@@ -123,7 +128,12 @@ export default function Report() {
           />
           )}
 
-          <Text style={{marginTop:10, marginBottom:10}}>Expenditure itemization</Text>
+
+          {/* EXPENDITURE AND RECURRING EXPENDITURE BAR CHART JSX */}
+          <Text style={styles.heading}>Expenditure itemization</Text>
+          {console.log(expSum)}
+          {expSum + cat2Sum == 0 ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
+          (
           <BarChart
             data={{
               labels: ["Category 1", "Category 2"],
@@ -140,8 +150,11 @@ export default function Report() {
             verticalLabelRotation={0}
             fromZero={true}
           />
-
-          <Text style={{marginTop:10, marginBottom:10}}>Recurring expenditure itemization</Text>
+          )}
+          
+          <Text style={styles.heading}>Recurring expenditure itemization</Text>
+          {recurrSum + recurrCat2Sum == 0 ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
+          (
           <BarChart
             data={{
               labels: ["Category 1", "Category 2"],
@@ -158,6 +171,7 @@ export default function Report() {
             verticalLabelRotation={0}
             fromZero={true}
           />
+          )}
 
           {/* {expR.exps.map((exp) => (
             <View key={_uniqueId()}>
@@ -165,10 +179,10 @@ export default function Report() {
               <Text>{exp.amount}</Text>
             </View>
           ))} */}
-
+{/* 
           {console.log(piePieces)}
           {console.log(expSum)}
-          {console.log(cat2Sum)}
+          {console.log(cat2Sum)} */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -184,5 +198,19 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
     justifyContent: 'center',
+  },
+  heading: {
+    color: "#FF1053",
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 10
+  },
+  warning: {
+    color: "#acacac",
+    fontStyle: "italic",
+    textAlign: "center",
+    fontSize: 10
   }
 });
