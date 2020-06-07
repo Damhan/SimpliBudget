@@ -30,7 +30,9 @@ export default function(state=initialState, action) {
         case CLEAR_EXP:
             return {
                 ...state,
-                exps: []
+                exps: [],
+                cat: 0,
+                catCounts: [{category: 'cat1', count: 0},{category:'cat2', count: 0}]
             }
         case SET_CLEAR:
             return {
