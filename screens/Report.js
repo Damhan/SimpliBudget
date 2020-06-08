@@ -9,6 +9,7 @@ import { PieChart, BarChart } from "react-native-chart-kit";
 
 export default function Report() {
 
+  /* State variables for our reducers */
   const expR = useSelector(state => state.expR)
   const recurrExpR = useSelector(state => state.recurrExpR)
 
@@ -19,6 +20,12 @@ export default function Report() {
   const [recurrSum, setRecurrSum] = useState(0)
   const [recurrCat2Sum, setRecurrCat2Sum] = useState(0)
   const [recurrPiePieces, setRecurrPiePieces] = useState([]);
+
+  /* State variables for ensuring categories initialized before trying to plot chart */
+  const[categoriesInitialized, setCategoriesInitialized] = useState(false);
+  const[recurrCategoriesInitialized, setRecurrCategoriesInitialized] = useState(false);
+
+  /* State variables for dispatcher */
   const dispatch = useDispatch();
 
   /* Exp Pie Chart Props */
@@ -38,9 +45,6 @@ export default function Report() {
       stroke: "#ffa726"
     }
   }
-
-  /* Exp Bar Chart Props */
-  const cat1Reducer = (accumulator, currentValue) => currentValue.category.localeCompare("cat1") ? accumulator + currentValue.amount : accumulator
 
   const getAllExps = () => {
     dispatch(getExp())
@@ -71,18 +75,21 @@ export default function Report() {
     })
 
     /* Sum the total spent on each category for our bar chart. */
-    /* TODO: Implement this bar chart data setup */
     expR.exps.map(exp => {
       console.log(exp)
       setExpSum(expSum => exp.category.localeCompare("cat1") ? parseInt(expSum) : (parseInt(expSum) + parseInt(exp.amount)) )
       setCat2Sum(cat2Sum => exp.category.localeCompare("cat2") ? parseInt(cat2Sum) : (parseInt(cat2Sum) + parseInt(exp.amount)) )
 
     })
-
+    /* Sum the total spent on each category for our bar chart. */
     recurrExpR.recurrExps.map(recurrExp => {
       setRecurrSum(recurrSum => recurrExp.category.localeCompare("cat1") ? parseInt(recurrSum) : (parseInt(recurrSum) + parseInt(recurrExp.amount)) )
       setRecurrCat2Sum(recurrCat2Sum => recurrExp.category.localeCompare("cat2") ? parseInt(recurrCat2Sum) : (parseInt(recurrCat2Sum) + parseInt(recurrExp.amount)) )
     })
+
+    /* Update state variables with value from reducer. */
+    setCategoriesInitialized(expR.catsInitialized)
+    setRecurrCategoriesInitialized(recurrExpR.recurrCatsInitialized)
 
 
 
@@ -104,7 +111,7 @@ export default function Report() {
           <Text style={styles.heading}>Expenditure breakdown</Text>
           {console.log(piePieces)}
           {
-          piePieces[0] ? <Text style={styles.warning}>Add some expenses to view statistics</Text> :
+          !(categoriesInitialized == true) ? <Text style={styles.warning}>Add some expenses to view statistics</Text> :
           (<PieChart
             data={piePieces}
             width={screenWidth}
@@ -116,7 +123,8 @@ export default function Report() {
           }
 
           <Text style={styles.heading}>Recurring expenditure breakdown</Text>
-          {recurrPiePieces[0] ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
+          { 
+          !(recurrCategoriesInitialized == true) ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
           (
           <PieChart
             data={recurrPiePieces}
@@ -172,17 +180,7 @@ export default function Report() {
             fromZero={true}
           />
           )}
-
-          {/* {expR.exps.map((exp) => (
-            <View key={_uniqueId()}>
-              <Text>{exp.category}</Text>
-              <Text>{exp.amount}</Text>
-            </View>
-          ))} */}
-{/* 
-          {console.log(piePieces)}
-          {console.log(expSum)}
-          {console.log(cat2Sum)} */}
+          
       </ScrollView>
     </SafeAreaView>
   );

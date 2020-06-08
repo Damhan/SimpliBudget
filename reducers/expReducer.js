@@ -4,6 +4,7 @@ const initialState = {
     exps: [],
     cat:0,
     catCounts: [{category: 'cat1', count: 0},{category:'cat2', count: 0}],
+    catsInitialized: false,
     lastClear: 2
 }
 
@@ -25,6 +26,7 @@ export default function(state=initialState, action) {
                 catCounts: state.catCounts.map(
                     (cat) => cat.category === action.payload.category ? {...cat, count: cat.count + 1} : cat
                 ),
+                catsInitialized: true,
                 cat: state.cat + 1
             }
         case CLEAR_EXP:
