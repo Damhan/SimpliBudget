@@ -15,10 +15,8 @@ export default function Report() {
 
   /* State variables for our exp & recur exp charts */
   const [piePieces, setPiePieces] = useState([]);
-  const [expSum, setExpSum] = useState(0)
-  const [cat2Sum, setCat2Sum] = useState(0)
-  const [recurrSum, setRecurrSum] = useState(0)
-  const [recurrCat2Sum, setRecurrCat2Sum] = useState(0)
+  const [expChartSum, setExpChartSum] = useState([]);
+  const [recurrChartSum, setRecurrChartSum] = useState([]);
   const [recurrPiePieces, setRecurrPiePieces] = useState([]);
 
   /* State variables for ensuring categories initialized before trying to plot chart */
@@ -46,6 +44,29 @@ export default function Report() {
     }
   }
 
+  const categories = {
+    "house": {
+      name: "Housing",
+      color: "hotpink"
+    },
+    "transport": {
+      name: "Transportation",
+      color: "gainsboro"
+    },
+    "food": {
+      name: "Food",
+      color: "deepskyblue"
+    },
+    "utilities": {
+      name: "Utilities",
+      color: "blanchedalmond"
+    },
+    "clothing": {
+      name: "Clothing",
+      color: "lightsalmon"
+    }
+  }
+
   const getAllExps = () => {
     dispatch(getExp())
     dispatch(getRecurrExp())
@@ -54,37 +75,39 @@ export default function Report() {
 
   useEffect(() => {
     getAllExps()
-
+    
     /* Create our piePieces array for piechart's data prop */
     expR.catCounts.map(cat => {
-
+        var category = cat.category
         setPiePieces(piePieces => [...piePieces, {value: ((cat.count / expR.cat) * 100),
-                                                  name: (cat.category.localeCompare("cat1") ? "Category 2" : "Category 1"),
-                                                  color: (cat.category.localeCompare("cat1") ? "#FF1053" : "#a5ff60"),
+                                                  //  name: (cat.category.localeCompare("cat1") ? "Category 2" : "Category 1"),
+                                                  name: categories[category].name,
+                                                  color: categories[category].color,
                                                   legendFontColor: "black", legendFontSize: 15}
         ])
+        var total = 0
+        expR.exps.map(exp => {
+          if (exp.category === cat.category) {
+            total += exp.amount
+          }
+        })
+        setExpChartSum(expChartSum => [...expChartSum, total])
     })
     /* Create our piePieces array for piechart's data prop */
     recurrExpR.recurrCatCounts.map(cat => {
-
+      var category = cat.category
       setRecurrPiePieces(recurrPiePieces => [...recurrPiePieces, {value: ((cat.count / recurrExpR.cat) * 100),
-                                                name: (cat.category.localeCompare("cat1") ? "Category 2" : "Category 1"),
-                                                color: (cat.category.localeCompare("cat1") ? "#FF1053" : "#a5ff60"),
-                                                legendFontColor: "black", legendFontSize: 15}
+                                                                  name: categories[category].name,
+                                                                  color: categories[category].color,
+                                                                  legendFontColor: "black", legendFontSize: 15}
         ])
-    })
-
-    /* Sum the total spent on each category for our bar chart. */
-    expR.exps.map(exp => {
-      console.log(exp)
-      setExpSum(expSum => exp.category.localeCompare("cat1") ? parseInt(expSum) : (parseInt(expSum) + parseInt(exp.amount)) )
-      setCat2Sum(cat2Sum => exp.category.localeCompare("cat2") ? parseInt(cat2Sum) : (parseInt(cat2Sum) + parseInt(exp.amount)) )
-
-    })
-    /* Sum the total spent on each category for our bar chart. */
-    recurrExpR.recurrExps.map(recurrExp => {
-      setRecurrSum(recurrSum => recurrExp.category.localeCompare("cat1") ? parseInt(recurrSum) : (parseInt(recurrSum) + parseInt(recurrExp.amount)) )
-      setRecurrCat2Sum(recurrCat2Sum => recurrExp.category.localeCompare("cat2") ? parseInt(recurrCat2Sum) : (parseInt(recurrCat2Sum) + parseInt(recurrExp.amount)) )
+        var total = 0
+        recurrExpR.recurrExps.map(recurrExp => {
+          if (recurrExp.category === cat.category) {
+            total += recurrExp.amount
+          }
+        })
+        setRecurrChartSum(recurrChartSum => [...recurrChartSum, total])
     })
 
     /* Update state variables with value from reducer. */
@@ -105,11 +128,10 @@ export default function Report() {
       <ScrollView style={styles.container}>
         <StatusBar hidden />
 
-          {/* <Button title="Delete" onPress={clearAsyncStorage}></Button> */}
+          <Button title="Delete" onPress={clearAsyncStorage}></Button>
 
           {/* EXPENDITURE AND RECURRING EXPENDITURE PIE CHART JSX*/}
           <Text style={styles.heading}>Expenditure breakdown</Text>
-          {console.log(piePieces)}
           {
           !(categoriesInitialized == true) ? <Text style={styles.warning}>Add some expenses to view statistics</Text> :
           (<PieChart
@@ -139,15 +161,14 @@ export default function Report() {
 
           {/* EXPENDITURE AND RECURRING EXPENDITURE BAR CHART JSX */}
           <Text style={styles.heading}>Expenditure itemization</Text>
-          {console.log(expSum)}
-          {expSum + cat2Sum == 0 ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
+          {expChartSum.reduce((a,b) => a+b,0) === 0 ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
           (
           <BarChart
             data={{
-              labels: ["Category 1", "Category 2"],
+              labels: ["Housing", "Transportation", "Food", "Utilities", "Clothing"],
               datasets: [
                 {
-                  data: [expSum, cat2Sum]
+                  data: expChartSum
                 }
               ]
             }}
@@ -161,14 +182,14 @@ export default function Report() {
           )}
           
           <Text style={styles.heading}>Recurring expenditure itemization</Text>
-          {recurrSum + recurrCat2Sum == 0 ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
+          {recurrChartSum.reduce((a,b) => a+b,0) === 0 ? (<Text style={styles.warning}>Add some expenses to view statistics</Text>) : 
           (
           <BarChart
             data={{
-              labels: ["Category 1", "Category 2"],
+              labels: ["Housing", "Transportation", "Food", "Utilities", "Clothing"],
               datasets: [
                 {
-                  data: [recurrSum, recurrCat2Sum]
+                  data: recurrChartSum
                 }
               ]
             }}

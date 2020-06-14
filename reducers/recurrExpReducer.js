@@ -3,7 +3,7 @@ import { GET_REC_EXP, ADD_REC_EXP, DEL_REC_EXP } from './../actions/types';
 const initialState = {
     recurrExps: [],
     cat:0,
-    recurrCatCounts: [{category: 'cat1', count: 0},{category:'cat2', count: 0}],
+    recurrCatCounts: [{category: 'house', count: 0},{category:'transport', count: 0}, {category:"food", count:0},{category:'utilities', count: 0}, {category:"clothing", count:0}],
     recurrCatsInitialized: false
 }
 

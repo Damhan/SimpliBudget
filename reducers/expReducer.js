@@ -3,7 +3,7 @@ import {GET_EXP, DEL_EXP, ADD_EXP, CLEAR_EXP, SET_CLEAR} from './../actions/type
 const initialState = {
     exps: [],
     cat:0,
-    catCounts: [{category: 'cat1', count: 0},{category:'cat2', count: 0}],
+    catCounts: [{category: 'house', count: 0},{category:'transport', count: 0}, {category:"food", count:0},{category:'utilities', count: 0}, {category:"clothing", count:0}],
     catsInitialized: false,
     lastClear: 2
 }
@@ -39,7 +39,7 @@ export default function(state=initialState, action) {
                 ...state,
                 exps: [],
                 cat: 0,
-                catCounts: [{category: 'cat1', count: 0},{category:'cat2', count: 0}]
+                catCounts: [{category: 'house', count: 0},{category:'transport', count: 0}, {category:"food", count:0},{category:'utilities', count: 0}, {category:"clothing", count:0}]
             }
         case SET_CLEAR:
             return {

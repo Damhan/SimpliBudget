@@ -10,7 +10,7 @@ import { TextInput } from 'react-native-gesture-handler';
 export default function Expenditure() {
 
     const [expValue, onChangeText] = useState('')
-    const [catValue, onChangeCat] = useState('cat1')
+    const [catValue, onChangeCat] = useState('house')
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -45,8 +45,12 @@ export default function Expenditure() {
           style={{height:40, borderColor: 'gray', borderWidth:1}}
           value={catValue}
           onValueChange={cat => onChangeCat(cat)}>
-            <Picker.Item label="Category 1" value="cat1" />
-            <Picker.Item label="Category 2" value="cat2" />
+            <Picker.Item label="Housing" value="house" />
+            <Picker.Item label="Transport" value="transport" />
+            <Picker.Item label="Food" value="food" />
+            <Picker.Item label="Utilities" value="utilities" />
+            <Picker.Item label="Clothing" value="clothing" />
+
         </Picker>
         <Button title="Add" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={addExpenditure}/>
       </View>

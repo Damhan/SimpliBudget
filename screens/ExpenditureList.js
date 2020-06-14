@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, StatusBar, View, Picker, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {getExp, delExp} from './../actions/expActions.js';
@@ -10,6 +10,24 @@ export default function ExpenditureList() {
 
     const expR = useSelector(state => state.expR)
     const recurrExpR = useSelector(state => state.recurrExpR)
+
+    const categories = {
+        "house": {
+          name: "Housing",
+        },
+        "transport": {
+          name: "Transportation",
+        },
+        "food": {
+          name: "Food",
+        },
+        "utilities": {
+          name: "Utilities",
+        },
+        "clothing": {
+          name: "Clothing",
+        }
+      }
 
     const dispatch = useDispatch();
 
@@ -26,12 +44,11 @@ export default function ExpenditureList() {
         { expR.exps.length > 0 ? (
             expR.exps.map(exp => (
                 <View key={exp.id} style={styles.exp}>
-                    <Text style={styles.expItem}>{exp.id}</Text>
-                    <Text style={styles.expItem}>{exp.amount}</Text>
-                    <Text style={styles.expItem}>{exp.category}</Text>
+                    <Text style={styles.expItem}>Amount: {exp.amount}</Text>
+                    <Text style={styles.expItem}>Category: {categories[exp.category].name}</Text>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => {dispatch(delRecurrExp(exp))}}>
+                        onPress={() => {dispatch(delExp(exp))}}>
                         <AntDesign name="delete" size={24} color="#424242" />
                     </TouchableOpacity>
                 </View>
@@ -41,9 +58,8 @@ export default function ExpenditureList() {
         { recurrExpR.recurrExps.length > 0 ? (
             recurrExpR.recurrExps.map(recurrExp => (
                 <View key={recurrExp.id} style={styles.exp}>
-                    <Text style={styles.expItem}>{recurrExp.id}</Text>
-                    <Text style={styles.expItem}>{recurrExp.amount}</Text>
-                    <Text style={styles.expItem}>{recurrExp.category}</Text>
+                    <Text style={styles.expItem}>Amount: {recurrExp.amount}</Text>
+                    <Text style={styles.expItem}>Category: {categories[recurrExp.category].name}</Text>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {dispatch(delRecurrExp(recurrExp))}}>
@@ -73,14 +89,15 @@ const styles = StyleSheet.create({
     borderTopColor: '#FAFAFA',
     borderTopWidth: 1,
     borderRadius:1,
-    width:"90%",
+    width:"95%",
     justifyContent:"center"
     
   },
   expItem: {
       padding:13,
       color: "#424242",
-      fontSize:15
+      fontSize:12,
+      width:"45%"
   },
   button: {
     alignItems: 'center',
@@ -89,8 +106,7 @@ const styles = StyleSheet.create({
   },
   title:{
       width:"100%",
-      backgroundColor: "#FF1053",
-      color: "#78FF10",
+      color: "#FF1053",
       paddingTop: 10,
       paddingBottom:10,
       textAlign:"center",
