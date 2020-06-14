@@ -16,7 +16,12 @@ export default function(state=initialState, action) {
         case DEL_REC_EXP:
             return {
                 ...state,
-                recurrExps: state.recurrExps.filter(recurr => recurr.id !== action.payload)
+                recurrExps: state.recurrExps.filter(recurrExp => recurrExp.id !== action.payload.id),
+                recurrCatCounts: state.recurrCatCounts.map(
+                    (cat) => cat.category === action.payload.category ? {...cat, count: cat.count - 1} : cat
+                ),
+                recurrCatsInitialized: state.cat === 1 ? false : true,
+                cat: state.cat - 1
             }
         case ADD_REC_EXP:
             return {

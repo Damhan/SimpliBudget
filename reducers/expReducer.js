@@ -17,7 +17,12 @@ export default function(state=initialState, action) {
         case DEL_EXP:
             return {
                 ...state,
-                exps: state.exps.filter(exp => exp.id !== action.payload)
+                exps: state.exps.filter(exp => exp.id !== action.payload.id),
+                catCounts: state.catCounts.map(
+                    (cat) => cat.category === action.payload.category ? {...cat, count: cat.count - 1} : cat
+                ),
+                catsInitialized: state.cat === 1 ? false : true,
+                cat: state.cat - 1
             }
         case ADD_EXP:
             return {

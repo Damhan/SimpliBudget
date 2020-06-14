@@ -10,6 +10,7 @@ import Report from './screens/Report';
 import Settings from './screens/Settings';
 import { PersistGate } from 'redux-persist/integration/react';
 import RecurrExpenditure from './screens/RecurrExpenditure';
+import ExpenditureList from './screens/ExpenditureList';
 
 
 const Stack = createStackNavigator();
@@ -61,6 +62,11 @@ export default function App() {
             <Stack.Screen
               name="RecurrExpenditure"
               component={RecurrExpenditure}
+              options={navigationOptions}
+            />
+            <Stack.Screen
+              name="ExpenditureList"
+              component={ExpenditureList}
               options={navigationOptions}
             />
             <Stack.Screen

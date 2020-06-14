@@ -41,6 +41,7 @@ export default function Home({navigation}) {
         <Text style={styles.balance}>${balR.balance - expTotal - recurrExpTotal}</Text>
         <Button title="Add expense" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('Expenditure')}/>
         <Button title="Add recurring expense" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('RecurrExpenditure')}/>
+        <Button title="View Expenditure" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('ExpenditureList')}/>
         <Button title="View monthly report" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('Report')}/>
         <Button title="Settings" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('Settings')}/>
 

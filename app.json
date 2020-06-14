@@ -9,12 +9,9 @@
       "android",
       "web"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "adaptiveIcon": {
-      "backgroundColor": "#FF1053"
-    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -29,11 +26,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.damhan.simplibudget",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.3"
     },
     "android": {
       "package": "com.damhan.simplibudget",
-      "versionCode": 2
+      "versionCode": 3
     },
     "primaryColor": "#FF1053"
   }
