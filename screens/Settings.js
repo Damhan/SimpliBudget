@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View, AsyncStorage, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { Button } from 'react-native-elements';
 import { setBal} from './../actions/balActions.js'
@@ -12,9 +12,20 @@ export default function Settings({navigation}) {
     const dispatch = useDispatch();
   
     const addExpenditure = () => {
-        dispatch(setBal(balValue))
-        onChangeText("")
-        navigation.navigate('Home')
+        if (!isNaN(balValue) && balValue) {
+          dispatch(setBal(balValue))
+          onChangeText("")
+          navigation.navigate('Home')
+        }
+        else {
+          Alert.alert("Invalid Value!", "Balance must be a numerical value only. \nEG: 2000")
+        }
+
+    }
+
+      // Used for dev-testing to clear the async storage.
+    const clearAsyncStorage = async() => {
+      AsyncStorage.clear()
     }
 
 
@@ -27,7 +38,8 @@ export default function Settings({navigation}) {
           value={balValue}
           onChangeText={text => onChangeText(text)}
         />
-        <Button title="Update monthly balance" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={addExpenditure}/>
+        <Button title="Update Monthly Balance" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={addExpenditure}/>
+        <Button title="Clear All App Data" buttonStyle={styles.button}  containerStyle={styles.delButtonContainer} onPress={clearAsyncStorage}></Button>
       </View>
     </View>
 
@@ -49,7 +61,10 @@ const styles = StyleSheet.create({
     flex:1,
   },
   buttonContainer: {
-    paddingTop: '5%',
+    paddingTop: '3%',
+  },
+  delButtonContainer: {
+    paddingTop: '10%',
   },
   button: {
     backgroundColor: '#FF1053'

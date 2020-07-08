@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, View, Picker, Text } from 'react-native';
+import { StyleSheet, StatusBar, View, Picker, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {getExp} from './../actions/expActions.js';
 import { Button } from 'react-native-elements';
@@ -7,7 +7,7 @@ import { addExp} from './../actions/expActions.js'
 import { TextInput } from 'react-native-gesture-handler';
 
 
-export default function Expenditure({navigation}) {
+export default function Expenditure() {
 
     const [expValue, onChangeText] = useState('')
     const [catValue, onChangeCat] = useState('house')
@@ -18,6 +18,7 @@ export default function Expenditure({navigation}) {
     },[])
   
     const addExpenditure = () => {
+      if(!isNaN(expValue) && expValue) {
         const exp = {
           //uuid cannot currently be used with expo due to expo not being compatible with crypto.getRandomValues.
           //the new uuid cannot function without it, a polyfill, react-native-get-random-values does not work with expo as it requires native code.
@@ -29,7 +30,10 @@ export default function Expenditure({navigation}) {
         }
         dispatch(addExp(exp))
         onChangeText("")
-        navigation.navigate('Home')
+      }
+      else {
+        Alert.alert("Invalid Value!", "Expenditure amount must be a numerical value only. \nEG: 2000")
+      }
     }
 
   return (
