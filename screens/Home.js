@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Text, StyleSheet, StatusBar, View } from 'react-native';
+import { Text, StyleSheet, StatusBar, View, TouchableOpacity } from 'react-native';
 import {useSelector,useDispatch} from 'react-redux';
 import { Button } from 'react-native-elements';
 import {getBal} from './../actions/balActions.js';
@@ -38,7 +38,12 @@ export default function Home({navigation}) {
     <View style={styles.main}>
       <View style={styles.container}>
         <StatusBar hidden />
-        <Text style={styles.balance}>${balR.balance - expTotal - recurrExpTotal}</Text>
+        <TouchableOpacity
+                                style={styles.balButton}
+                                onPress={() => navigation.navigate('Settings')}
+                              >
+          <Text style={styles.balance}>${balR.balance - expTotal - recurrExpTotal}</Text>
+        </TouchableOpacity>
         <Button title="Add expense" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('Expenditure')}/>
         <Button title="Add recurring expense" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('RecurrExpenditure')}/>
         <Button title="View Expenditure" buttonStyle={styles.button} containerStyle={styles.buttonContainer} onPress={() => navigation.navigate('ExpenditureList')}/>
@@ -69,12 +74,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#424242',
     fontSize: 50,
-    paddingBottom: '20%',
   },
   buttonContainer: {
     paddingTop: '5%',
   },
   button: {
     backgroundColor: '#FF1053'
+  },
+  balButton: {
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: '20%',
   }
 });

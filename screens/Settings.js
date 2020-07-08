@@ -6,7 +6,7 @@ import { setBal} from './../actions/balActions.js'
 import { TextInput } from 'react-native-gesture-handler';
 
 
-export default function Settings() {
+export default function Settings({navigation}) {
 
     const [balValue , onChangeText] = useState('')
     const dispatch = useDispatch();
@@ -14,6 +14,7 @@ export default function Settings() {
     const addExpenditure = () => {
         dispatch(setBal(balValue))
         onChangeText("")
+        navigation.navigate('Home')
     }
 
 

@@ -7,7 +7,7 @@ import { addExp} from './../actions/expActions.js'
 import { TextInput } from 'react-native-gesture-handler';
 
 
-export default function Expenditure() {
+export default function Expenditure({navigation}) {
 
     const [expValue, onChangeText] = useState('')
     const [catValue, onChangeCat] = useState('house')
@@ -29,6 +29,7 @@ export default function Expenditure() {
         }
         dispatch(addExp(exp))
         onChangeText("")
+        navigation.navigate('Home')
     }
 
   return (

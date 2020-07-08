@@ -6,7 +6,7 @@ import { addRecurrExp} from './../actions/recurrExpActions.js'
 import { TextInput } from 'react-native-gesture-handler';
 
 
-export default function RecurrExpenditure() {
+export default function RecurrExpenditure({navigation}) {
 
     const [recurrValue, onChangeText] = useState('')
     const [catValue, onChangeCat] = useState('house')
@@ -24,6 +24,7 @@ export default function RecurrExpenditure() {
         }
         dispatch(addRecurrExp(recurr))
         onChangeText("")
+        navigation.navigate('Home')
     }
 
 

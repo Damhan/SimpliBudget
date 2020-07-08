@@ -128,7 +128,7 @@ export default function Report() {
       <ScrollView style={styles.container}>
         <StatusBar hidden />
 
-          <Button title="Delete" onPress={clearAsyncStorage}></Button>
+          {/* <Button title="Delete" onPress={clearAsyncStorage}></Button> */}
 
           {/* EXPENDITURE AND RECURRING EXPENDITURE PIE CHART JSX*/}
           <Text style={styles.heading}>Expenditure breakdown</Text>
